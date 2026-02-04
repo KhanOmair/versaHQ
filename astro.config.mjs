@@ -10,6 +10,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   // REPLACE WITH YOUR ACTUAL DOMAIN
   site: 'https://www.versahq.online', 
+  // base: '/versaHQ',
   
   vite: {
     plugins: [tailwindcss()]
