@@ -1,0 +1,152 @@
+---
+const year = new Date().getFullYear();
+import { Image } from "astro:assets";
+import versaLogo from "../assets/versa_logo.png";
+---
+
+<footer class="bg-card border-t border-border mt-auto relative overflow-hidden">
+  <!-- Subtle background glow -->
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-linear-to-r from-transparent via-primary/50 to-transparent"
+  >
+  </div>
+
+  <div class="max-w-7xl mx-auto pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+      <!-- Logo & Bio -->
+      <div class="md:col-span-5 lg:col-span-4">
+        <a
+          href="/"
+          class="flex items-center gap-3 mb-6 group transition-transform duration-300 hover:scale-105 origin-left"
+        >
+          <Image src={versaLogo} alt="Versa Logo" class="h-10 w-auto" />
+          <span
+            class="font-outfit font-extrabold text-2xl tracking-tight text-white group-hover:text-primary transition-colors"
+            >Versa</span
+          >
+        </a>
+        <p class="text-muted text-base leading-relaxed max-w-xs">
+          Empowering enterprises to scale through modern software engineering,
+          cloud architecture, and intuitive design.
+        </p>
+      </div>
+
+      <!-- Links Sections -->
+      <div class="md:col-span-7 lg:col-span-8">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+          <div>
+            <h3
+              class="text-xs font-bold text-white tracking-[0.2em] uppercase mb-6 opacity-80"
+            >
+              Services
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="/services"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >Web & Mobile</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/services"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >Cloud & DevOps</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/services"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >UI/UX Design</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/services"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >Consulting</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3
+              class="text-xs font-bold text-white tracking-[0.2em] uppercase mb-6 opacity-80"
+            >
+              Company
+            </h3>
+            <ul class="space-y-3">
+              <li>
+                <a
+                  href="/about"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/blog"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >Insights</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/contact"
+                  class="text-sm text-muted hover:text-primary transition-colors duration-200 block py-1"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Optional Status/Newsletter Section -->
+          <div class="col-span-2 sm:col-span-1">
+            <h3
+              class="text-xs font-bold text-white tracking-[0.2em] uppercase mb-6 opacity-80"
+            >
+              Platform
+            </h3>
+            <div
+              class="flex items-center gap-2 text-sm text-emerald-400 font-medium"
+            >
+              <span class="relative flex h-2 w-2">
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+                ></span>
+                <span
+                  class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"
+                ></span>
+              </span>
+              All systems operational
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div
+      class="mt-16 pt-8 border-t border-border/40 flex flex-col md:flex-row justify-between items-center gap-4"
+    >
+      <p class="text-xs text-muted/60 order-2 md:order-1">
+        &copy; {year} VersaHQ. All rights reserved.
+      </p>
+      <div class="flex items-center gap-6 order-1 md:order-2">
+        <a
+          href="/privacy"
+          class="text-xs text-muted/60 hover:text-primary transition-colors"
+          >Privacy Policy</a
+        >
+        <a
+          href="/terms"
+          class="text-xs text-muted/60 hover:text-primary transition-colors"
+          >Terms of Service</a
+        >
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+
+const services = [
+  { 
+    title: 'Web & Mobile Development', 
+    desc: 'Bespoke applications built with React, Astro, and React Native. We focus on performance, accessibility, and user experience.',
+    features: ['PWA Development', 'Native Mobile Apps', 'Single Page Applications'] 
+  },
+  { 
+    title: 'Cloud Architecture & DevOps', 
+    desc: 'Scalable cloud infrastructure on AWS, Azure, or GCP. Automated CI/CD pipelines and container orchestration with Kubernetes.',
+    features: ['Cloud Migration', 'Infrastructure as Code', 'Security Audits'] 
+  },
+  { 
+    title: 'UI/UX Design', 
+    desc: 'User-centric design that drives conversion. We craft intuitive interfaces and seamless user journeys.',
+    features: ['Design Systems', 'Interactive Prototyping', 'User Research'] 
+  },
+  { 
+    title: 'AI & Data Engineering', 
+    desc: 'Leverage the power of AI to automate workflows and gain actionable insights from your data.',
+    features: ['Machine Learning Integration', 'Data Pipelines', 'Predictive Analytics'] 
+  },
+  {
+      title: 'SEO & Performance Optimization',
+      desc: 'Speed matters. We optimize your digital presence for maximum visibility and lightning-fast load times.',
+      features: ['Core Web Vitals', 'Technical SEO', 'Load Time Reduction']
+  }
+];
+---
+
+<Layout title="Services - Versa">
+  <div class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 font-outfit">Our Expertise</h1>
+      <p class="text-xl text-muted">
+        We deliver end-to-end software solutions tailored to your business goals.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {services.map(s => (
+        <Card title={s.title} class="h-full">
+          <p class="text-muted mb-6">{s.desc}</p>
+          <ul class="space-y-2 mb-8">
+            {s.features.map(f => (
+               <li class="flex items-center gap-2 text-sm text-gray-300">
+                  <span class="text-primary">•</span> {f}
+               </li>
+            ))}
+          </ul>
+          <Button href="/contact" variant="outline" size="sm">Get Started</Button>
+        </Card>
+      ))}
+    </div>
+    
+    <div class="mt-20 text-center">
+        <h3 class="text-2xl font-bold text-white mb-4">Need something custom?</h3>
+        <Button href="/contact">Let's Talk</Button>
+    </div>
+  </div>
+</Layout>

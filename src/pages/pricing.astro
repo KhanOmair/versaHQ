@@ -1,0 +1,141 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+
+const tiers = [
+    {
+        name: "Starter",
+        price: "$900",
+        unit: "/mvp",
+        desc: "Perfect for small teams and MVP development.",
+        features: [
+            "1 Senior Engineer",
+            "Weekly Sprints",
+            "Code Reviews",
+            "Basic Support",
+        ],
+    },
+    {
+        name: "Growth",
+        price: "$2,900",
+        unit: "/mo",
+        popular: true,
+        desc: "Full-stack team acceleration for growing products.",
+        features: [
+            "1 Full Stack Team",
+            "Daily Standups",
+            "Architecture Design",
+            "DevOps Setup",
+        ],
+    },
+    {
+        name: "Enterprise",
+        price: "Custom",
+        unit: "",
+        desc: "Dedicated squads for mission-critical systems.",
+        features: [
+            "Multiple Squads",
+            "24/7 SLA",
+            "Dedicated Project Manager",
+            "Security Compliance",
+            "On-premise Deployment",
+        ],
+    },
+];
+
+const faqs = [
+    {
+        q: "Do you offer hourly billing?",
+        a: "We primarily work on a retainer or fixed-project basis to ensure quality and commitment.",
+    },
+    {
+        q: "How fast can you start?",
+        a: "Typically within 2 weeks of contract signing.",
+    },
+    {
+        q: "What is your tech stack?",
+        a: "We specialize in React, Node.js, Python, and Go, but adapt to your needs.",
+    },
+    {
+        q: "Do you sign NDAs?",
+        a: "Yes, absolutely. Intellectual property protection is standard.",
+    },
+];
+---
+
+<Layout title="Pricing - Versa">
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h1
+                class="text-4xl md:text-6xl font-bold text-white mb-6 font-outfit"
+            >
+                Transparent Pricing
+            </h1>
+            <p class="text-xl text-muted">
+                Simple, predictable conceptual pricing for high-quality
+                engineering.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+            {
+                tiers.map((tier) => (
+                    <div
+                        class={`relative p-8 rounded-2xl border ${tier.popular ? "border-primary bg-primary/5" : "border-border bg-card"} flex flex-col`}
+                    >
+                        {tier.popular && (
+                            <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-white text-xs font-bold rounded-full uppercase tracking-wide">
+                                Most Popular
+                            </div>
+                        )}
+                        <h3 class="text-xl font-bold text-white mb-2">
+                            {tier.name}
+                        </h3>
+                        <div class="mb-4">
+                            <span class="text-4xl font-bold text-white font-outfit">
+                                {tier.price}
+                            </span>
+                            <span class="text-muted">{tier.unit}</span>
+                        </div>
+                        <p class="text-muted text-sm mb-6">{tier.desc}</p>
+                        <ul class="space-y-3 mb-8 grow">
+                            {tier.features.map((f) => (
+                                <li class="flex items-center gap-2 text-sm text-gray-300">
+                                    <span class="text-primary text-lg">•</span>{" "}
+                                    {f}
+                                </li>
+                            ))}
+                        </ul>
+                        <Button
+                            href="/contact"
+                            variant={tier.popular ? "primary" : "outline"}
+                            class="w-full"
+                        >
+                            {tier.name === "Enterprise"
+                                ? "Contact Sales"
+                                : "Start Trial"}
+                        </Button>
+                    </div>
+                ))
+            }
+        </div>
+
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-2xl font-bold text-white mb-8 text-center">
+                Frequently Asked Questions
+            </h2>
+            <div class="space-y-6">
+                {
+                    faqs.map((faq) => (
+                        <div class="bg-card border border-border rounded-xl p-6">
+                            <h4 class="text-lg font-bold text-white mb-2">
+                                {faq.q}
+                            </h4>
+                            <p class="text-muted">{faq.a}</p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</Layout>

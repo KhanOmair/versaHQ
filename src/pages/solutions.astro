@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import { Image } from "astro:assets";
+
+// Import SVGs
+import startupLaunchIcon from "../assets/startup-launch.svg";
+import scaleReliabilityIcon from "../assets/scale-reliability.svg";
+import modernLegacyIcon from "../assets/modern-legacy.svg";
+import aiIcon from "../assets/AI.svg";
+
+const solutions = [
+    {
+        title: "Startup Launch",
+        desc: "Go from idea to MVP in weeks, not months. Full-stack development for rapid market entry.",
+        icon: startupLaunchIcon,
+        features: [
+            "MVP Strategy & Lean Scoping",
+            "Rapid Prototyping & Agile Delivery",
+            "Investor-Ready Tech Architecture",
+        ],
+    },
+    {
+        title: "Scale & Reliability",
+        desc: "Prepare your infrastructure for millions of users. Load balancing, caching, and database optimization.",
+        icon: scaleReliabilityIcon,
+        features: [
+            "Cloud Infrastructure Optimization",
+            "Real-time Monitoring & Alerting",
+            "Auto-scaling & Zero-Downtime Deployments",
+        ],
+    },
+    {
+        title: "Modernize Legacy",
+        desc: "Transform outdated systems into modern, microservices-based architectures without downtime.",
+        icon: modernLegacyIcon,
+        features: [
+            "Technical Debt Audit & Strategy",
+            "Monolith to Microservices Refactoring",
+            "Zero-Downtime Database Migrations",
+        ],
+    },
+    {
+        title: "AI-Enabled Experiences",
+        desc: "Integrate LLMs and personalized recommendations into your existing product suite.",
+        icon: aiIcon,
+        features: [
+            "Custom AI Agent Development",
+            "Semantic Search & RAG Pipelines",
+            "Automated Data Engineering",
+        ],
+    },
+];
+---
+
+<Layout title="Solutions - Versa">
+    <div class="pt-32 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-16">
+            <h1
+                class="text-4xl md:text-6xl font-bold text-white mb-6 font-outfit"
+            >
+                Solutions tailored <br /> to your stage.
+            </h1>
+            <p class="text-xl text-muted max-w-2xl">
+                Whether you're a startup looking for product-market fit or an
+                enterprise scaling to millions, we have a package for you.
+            </p>
+        </div>
+
+        <div class="space-y-24">
+            {
+                solutions.map((s, i) => (
+                    <div
+                        class={`flex flex-col md:flex-row gap-12 items-center ${i % 2 === 1 ? "md:flex-row-reverse" : ""}`}
+                    >
+                        <div class="flex-1 bg-card border border-border rounded-3xl p-12 aspect-video flex items-center justify-center overflow-hidden">
+                            <Image
+                                src={s.icon}
+                                alt={s.title}
+                                class="w-2/3 h-auto max-h-[80%] object-contain"
+                            />
+                        </div>
+                        <div class="flex-1 space-y-6">
+                            <h2 class="text-3xl font-bold text-white font-outfit">
+                                {s.title}
+                            </h2>
+                            <p class="text-lg text-muted">{s.desc}</p>
+                            <ul class="space-y-3">
+                                {s.features.map((feature) => (
+                                    <li class="flex items-center gap-3 text-gray-300">
+                                        <span class="w-6 h-6 shrink-0 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs">
+                                            ✓
+                                        </span>
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+                            <div class="pt-4">
+                                <Button href="/contact" variant="primary">
+                                    Learn More
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</Layout>
