@@ -2,17 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const Game = () => {
     const canvasRef = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    // Use ref for game running state to avoid closure issues in the loop
+    const isRunning = useRef(false);
     const [score, setScore] = useState(0);
     const [highScore, setHighScore] = useState(0);
-    const [gameOver, setGameOver] = useState(false);
+    const [gameState, setGameState] = useState('START'); // START, PLAYING, GAME_OVER
 
     // Game constants
     const GRAVITY = 0.6;
     const JUMP_FORCE = -10;
     const SPEED = 5;
 
-    // Game state
+    // Game state refs
     const player = useRef({ x: 50, y: 200, dy: 0, size: 30, grounded: false });
     const obstacles = useRef([]);
     const frameId = useRef(null);
@@ -24,26 +25,19 @@ const Game = () => {
     }, []);
 
     const startGame = () => {
-        setIsPlaying(true);
-        setGameOver(false);
+        isRunning.current = true;
+        setGameState('PLAYING');
         setScore(0);
         scoreRef.current = 0;
         player.current = { x: 50, y: 200, dy: 0, size: 30, grounded: false };
-        obstacles.current = [];
+        obstacles.current = [{ x: 600, y: 270, w: 20, h: 30 }];
 
+        if (frameId.current) cancelAnimationFrame(frameId.current);
         loop();
-
-        // Add obstacles periodically (simplified for this demo)
-        // Ideally handled in loop, but here we push initial and let loop handle spawning
-        obstacles.current.push({ x: 600, y: 270, w: 20, h: 30 });
     };
 
     const handleJump = () => {
-        if (!isPlaying && !gameOver) {
-            startGame();
-            return;
-        }
-        if (gameOver) {
+        if (gameState !== 'PLAYING') {
             startGame();
             return;
         }
@@ -55,6 +49,8 @@ const Game = () => {
     };
 
     const loop = () => {
+        if (!isRunning.current) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
@@ -75,7 +71,6 @@ const Game = () => {
 
         // Update Obstacles
         if (Math.random() < 0.015) {
-            // Spawn with minimum distance
             const last = obstacles.current[obstacles.current.length - 1];
             if (!last || (canvas.width - last.x > 250)) {
                 obstacles.current.push({ x: canvas.width, y: 270, w: 20 + Math.random() * 20, h: 30 });
@@ -90,6 +85,7 @@ const Game = () => {
         obstacles.current = obstacles.current.filter(obs => obs.x + obs.w > 0);
 
         // Collision Detection
+        let collision = false;
         obstacles.current.forEach(obs => {
             if (
                 player.current.x < obs.x + obs.w &&
@@ -97,13 +93,26 @@ const Game = () => {
                 player.current.y < obs.y + obs.h &&
                 player.current.y + player.current.size > obs.y
             ) {
-                // Collision!
-                endGame();
+                collision = true;
             }
         });
 
-        if (!isPlaying) return; // If endGame set isPlaying false
+        if (collision) {
+            endGame();
+            // Draw one last frame to show collision state
+            drawGame(ctx);
+            return;
+        }
 
+        // Score
+        scoreRef.current++;
+        if (scoreRef.current % 10 === 0) setScore(Math.floor(scoreRef.current / 10));
+
+        drawGame(ctx);
+        frameId.current = requestAnimationFrame(loop);
+    };
+
+    const drawGame = (ctx) => {
         // Draw Player
         ctx.fillStyle = '#FA5F1A';
         ctx.fillRect(player.current.x, player.current.y, player.current.size, player.current.size);
@@ -116,18 +125,12 @@ const Game = () => {
 
         // Draw Floor
         ctx.fillStyle = '#253041';
-        ctx.fillRect(0, 300, canvas.width, 2);
-
-        // Score
-        scoreRef.current++;
-        if (scoreRef.current % 10 === 0) setScore(Math.floor(scoreRef.current / 10));
-
-        frameId.current = requestAnimationFrame(loop);
+        ctx.fillRect(0, 300, ctx.canvas.width, 2);
     };
 
     const endGame = () => {
-        setIsPlaying(false);
-        setGameOver(true);
+        isRunning.current = false;
+        setGameState('GAME_OVER');
         if (frameId.current) cancelAnimationFrame(frameId.current);
 
         const currentScore = Math.floor(scoreRef.current / 10);
@@ -138,6 +141,12 @@ const Game = () => {
     };
 
     useEffect(() => {
+        // Initial draw
+        const canvas = canvasRef.current;
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            drawGame(ctx);
+        }
         return () => {
             if (frameId.current) cancelAnimationFrame(frameId.current);
         };
@@ -153,19 +162,24 @@ const Game = () => {
                     ref={canvasRef}
                     width={600}
                     height={320}
-                    className="bg-background rounded-lg border border-border cursor-pointer select-none"
+                    className="bg-background rounded-lg border border-border cursor-pointer select-none outline-none"
                     onClick={handleJump}
                     tabIndex={0}
-                    onKeyDown={(e) => { if (e.code === 'Space') handleJump(); }}
+                    onKeyDown={(e) => {
+                        if (e.code === 'Space') {
+                            e.preventDefault(); // Prevent scrolling
+                            handleJump();
+                        }
+                    }}
                 />
 
-                {!isPlaying && !gameOver && (
+                {gameState === 'START' && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg pointer-events-none">
                         <p className="text-white text-xl font-bold">Click to Start</p>
                     </div>
                 )}
 
-                {gameOver && (
+                {gameState === 'GAME_OVER' && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-lg pointer-events-none">
                         <p className="text-primary text-2xl font-bold mb-2">Connection Lost!</p>
                         <p className="text-white text-lg">Score: {score}</p>
