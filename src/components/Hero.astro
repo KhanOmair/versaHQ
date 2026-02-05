@@ -13,7 +13,7 @@ import HeroAnimation from "./HeroAnimation.jsx";
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <!-- Text Content -->
-      <div class="hero-content">
+      <div class="hero-content order-2 lg:order-1 text-center lg:text-left">
         <!-- <div class="hero-badge inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent mb-6 opacity-0 translate-y-4">
           <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
           v2.0 is now live
@@ -30,19 +30,21 @@ import HeroAnimation from "./HeroAnimation.jsx";
         </h1>
 
         <p
-          class="hero-desc text-lg lg:text-xl text-muted mb-8 max-w-xl opacity-0 translate-y-4"
+          class="hero-desc text-lg lg:text-xl text-muted mb-8 max-w-xl mx-auto lg:mx-0 opacity-0 translate-y-4"
         >
           Versa provides enterprise-grade software solutions to modernize your
           infrastructure, automate workflows, and accelerate growth.
         </p>
 
-        <div class="hero-btns flex flex-wrap gap-4 opacity-0 translate-y-4">
+        <div
+          class="hero-btns flex flex-wrap gap-4 justify-center lg:justify-start opacity-0 translate-y-4"
+        >
           <Button href="/contact" size="lg">Start Building</Button>
           <!-- <Button href="/case-studies" variant="outline" size="lg">View Our Work</Button> -->
         </div>
 
         <div
-          class="mt-12 flex items-center gap-6 opacity-0 translate-y-4 hero-stats"
+          class="mt-12 flex items-center justify-center lg:justify-start gap-6 opacity-0 translate-y-4 hero-stats"
         >
           <div>
             <p class="text-3xl font-bold text-white font-outfit">99.9%</p>
@@ -57,7 +59,9 @@ import HeroAnimation from "./HeroAnimation.jsx";
       </div>
 
       <!-- Visual Content -->
-      <div class="hero-visual opacity-0 scale-95 hidden lg:block">
+      <div
+        class="hero-visual order-1 lg:order-2 opacity-0 scale-95 lg:block w-4/5 md:w-2/3 lg:w-full mx-auto translate-x-11 md:translate-x-0"
+      >
         <HeroAnimation client:only="react" />
       </div>
     </div>
